@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JsonPlaceholderApi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250823153329_CriandoBancoDeDados")]
+    [Migration("20250823182224_CriandoBancoDeDados")]
     partial class CriandoBancoDeDados
     {
         /// <inheritdoc />
@@ -35,6 +35,9 @@ namespace JsonPlaceholderApi.Migrations
                     b.Property<string>("Body")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ExternalId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
