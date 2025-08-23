@@ -30,5 +30,13 @@ namespace JsonPlaceholderApi.Presentation.Controllers
             var posts = await _postService.GetAllPostsAsync();
             return Ok(posts);
         }
+
+        [HttpGet("user/{userId}")]
+        public async Task<ActionResult<IEnumerable<PostDto>>> GetPostsByUserId(int userId)
+        {
+            var posts = await _postService.GetPostsByUserIdAsync(userId);
+            return Ok(posts);
+        }
+
     }
 }

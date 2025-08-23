@@ -40,5 +40,11 @@ namespace JsonPlaceholderApi.Application.Services
             var posts = await _postRepository.GetAllAsync();
             return _mapper.Map<List<PostDto>>(posts);
         }
+
+        public async Task<IEnumerable<PostDto>> GetPostsByUserIdAsync(int userId)
+        {
+            var posts = await _postRepository.GetPostsByUserIdAsync(userId);
+            return _mapper.Map<List<PostDto>>(posts);
+        }
     }
 }

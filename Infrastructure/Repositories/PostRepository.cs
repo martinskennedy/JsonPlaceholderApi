@@ -24,11 +24,16 @@ namespace JsonPlaceholderApi.Infrastructure.Repositories
             return await _context.Posts.FindAsync(id);
         }
 
+        public async Task<IEnumerable<Post>> GetPostsByUserIdAsync(int userId)
+        {
+            // Consulta SQL
+            return await _context.Posts
+                .FromSqlRaw("SELECT * FROM Posts WHERE UserId = {0}", userId)
+                .ToListAsync();
+        }
+
         public async Task AddAsync(Post post)
         {
-            var exists = await _context.Posts.AnyAsync(p => p.ExternalId == post.ExternalId);
-            if (exists)
-                throw new InvalidOperationException($"Post com ExternalId {post.ExternalId} já existe.");
             await _context.Posts.AddAsync(post);
             await _context.SaveChangesAsync();
         }
@@ -48,5 +53,7 @@ namespace JsonPlaceholderApi.Infrastructure.Repositories
                 await _context.SaveChangesAsync();
             }
         }
+
+       
     }
 }
