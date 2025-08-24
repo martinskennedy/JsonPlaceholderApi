@@ -15,7 +15,6 @@ namespace JsonPlaceholderApi.Presentation.Controllers
             _postService = postService;
         }
 
-
         [HttpPost("fetch")]
         public async Task<ActionResult<IEnumerable<PostDto>>> FetchAndSavePosts()
         {
@@ -24,7 +23,7 @@ namespace JsonPlaceholderApi.Presentation.Controllers
                 var posts = await _postService.FetchAndSavePostsAsync();
                 if (posts == null || !posts.Any())
                 {
-                    return NotFound("Nenhum post foi encontrado");
+                    return NotFound("Nenhum post foi inserido");
                 }
                 return Ok(posts);
             }
@@ -81,6 +80,5 @@ namespace JsonPlaceholderApi.Presentation.Controllers
                 return StatusCode(500, new { message = $"Erro interno: {ex.Message}" });
             }
         }
-
     }
 }

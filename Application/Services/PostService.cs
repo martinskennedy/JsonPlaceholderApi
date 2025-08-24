@@ -21,18 +21,38 @@ namespace JsonPlaceholderApi.Application.Services
 
         public async Task<IEnumerable<PostDto>> FetchAndSavePostsAsync()
         {
+            // Busca todos os posts da API
             var postsFromApi = await _httpClient.GetFromJsonAsync<List<PostDto>>("https://jsonplaceholder.typicode.com/posts");
 
-            if (postsFromApi != null)
+            if (postsFromApi == null || !postsFromApi.Any())
+                return new List<PostDto>(); // nenhum post na API
+
+            // Pega todos os ExternalIds já existentes no banco
+            var existingExternalIds = (await _postRepository.GetAllAsync())
+                                       .Select(p => p.ExternalId)
+                                       .ToHashSet(); // HashSet para busca rápida
+
+            var newPosts = new List<Post>();
+
+            foreach (var dto in postsFromApi)
             {
-                var entities = _mapper.Map<List<Post>>(postsFromApi);
-                foreach (var entity in entities)
+                // Só adiciona se ExternalId ainda não existir
+                if (!existingExternalIds.Contains(dto.Id))
                 {
-                    await _postRepository.AddAsync(entity);
+                    var entity = _mapper.Map<Post>(dto);
+                    newPosts.Add(entity);
                 }
             }
 
-            return postsFromApi;
+            // Salva todos os novos posts
+            foreach (var entity in newPosts)
+            {
+                await _postRepository.AddAsync(entity);
+            }
+
+            // Retorna apenas os posts que foram inseridos
+            var insertedDtos = _mapper.Map<List<PostDto>>(newPosts);
+            return insertedDtos;
         }
 
         public async Task<IEnumerable<PostDto>> GetAllPostsAsync()
