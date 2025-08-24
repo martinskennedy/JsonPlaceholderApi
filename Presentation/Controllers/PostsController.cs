@@ -1,7 +1,5 @@
 ﻿using JsonPlaceholderApi.Application.DTOs;
 using JsonPlaceholderApi.Application.Interfaces;
-using JsonPlaceholderApi.Application.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JsonPlaceholderApi.Presentation.Controllers
@@ -17,25 +15,71 @@ namespace JsonPlaceholderApi.Presentation.Controllers
             _postService = postService;
         }
 
+
         [HttpPost("fetch")]
         public async Task<ActionResult<IEnumerable<PostDto>>> FetchAndSavePosts()
         {
-            var posts = await _postService.FetchAndSavePostsAsync();
-            return Ok(posts);
+            try
+            {
+                var posts = await _postService.FetchAndSavePostsAsync();
+                if (posts == null || !posts.Any())
+                {
+                    return NotFound("Nenhum post foi encontrado");
+                }
+                return Ok(posts);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { message = $"Erro de validação: {ex.Message}" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = $"Erro interno ao salvar posts: {ex.Message}" });
+            }
         }
 
-        [HttpGet]
+        [HttpGet()]
         public async Task<ActionResult<IEnumerable<PostDto>>> GetAll()
         {
-            var posts = await _postService.GetAllPostsAsync();
-            return Ok(posts);
+            try
+            {
+                var posts = await _postService.GetAllPostsAsync();
+                if (posts == null || !posts.Any())
+                {
+                    return NotFound("Nenhum Post foi encontrado");
+                }
+                return Ok(posts);
+            }
+            catch (ArgumentException ex) // Erros de regra de negócio (parâmetros inválidos, etc.)
+            {
+                return BadRequest(new { message = $"Erro de validação: {ex.Message}" });
+            }
+            catch (Exception ex) 
+            {
+                return StatusCode(500, new { message = $"Erro interno: {ex.Message}" });
+            }
         }
 
         [HttpGet("user/{userId}")]
         public async Task<ActionResult<IEnumerable<PostDto>>> GetPostsByUserId(int userId)
         {
-            var posts = await _postService.GetPostsByUserIdAsync(userId);
-            return Ok(posts);
+            try
+            {
+                var posts = await _postService.GetPostsByUserIdAsync(userId);
+                if (posts == null || !posts.Any())
+                {
+                    return NotFound($"Nenhum Usuário foi encontrado com o Id: {userId}");
+                }
+                return Ok(posts);
+            }
+            catch (ArgumentException ex) // Erros de regra de negócio (parâmetros inválidos, etc.)
+            {
+                return BadRequest(new { message = $"Erro de validação: {ex.Message}" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = $"Erro interno: {ex.Message}" });
+            }
         }
 
     }
