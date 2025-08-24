@@ -5,6 +5,8 @@ VisualStudioVersion = 17.13.35919.96 d17.13
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsonPlaceholderApi", "JsonPlaceholderApi.csproj", "{7B556CDD-BF19-4787-87F4-ADC45BB476BD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsonPlaceholderApi.Tests", "..\JsonPlaceholderApi.Tests\JsonPlaceholderApi.Tests.csproj", "{03B81BD0-FDDA-4782-B2CB-A413D9D74D68}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{7B556CDD-BF19-4787-87F4-ADC45BB476BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7B556CDD-BF19-4787-87F4-ADC45BB476BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7B556CDD-BF19-4787-87F4-ADC45BB476BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03B81BD0-FDDA-4782-B2CB-A413D9D74D68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03B81BD0-FDDA-4782-B2CB-A413D9D74D68}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03B81BD0-FDDA-4782-B2CB-A413D9D74D68}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03B81BD0-FDDA-4782-B2CB-A413D9D74D68}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
