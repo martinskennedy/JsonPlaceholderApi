@@ -15,6 +15,9 @@ namespace JsonPlaceholderApi.Presentation.Controllers
             _postService = postService;
         }
 
+        /// <summary>
+        /// Lê os Posts da API externa e grava no Banco de Dados.
+        /// </summary>
         [HttpPost("fetch")]
         public async Task<ActionResult<IEnumerable<PostDto>>> FetchAndSavePosts()
         {
@@ -37,6 +40,9 @@ namespace JsonPlaceholderApi.Presentation.Controllers
             }
         }
 
+        /// <summary>
+        /// Retorna todos os Posts do Banco de Dados.
+        /// </summary>
         [HttpGet()]
         public async Task<ActionResult<IEnumerable<PostDto>>> GetAll()
         {
@@ -59,6 +65,9 @@ namespace JsonPlaceholderApi.Presentation.Controllers
             }
         }
 
+        /// <summary>
+        /// Consulta um Post existente pelo UserId.
+        /// </summary>
         [HttpGet("user/{userId}")]
         public async Task<ActionResult<IEnumerable<PostDto>>> GetPostsByUserId(int userId)
         {
@@ -81,6 +90,9 @@ namespace JsonPlaceholderApi.Presentation.Controllers
             }
         }
 
+        /// <summary>
+        /// Atualiza um Post existente pelo Id.
+        /// </summary>
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] PostDto postDto)
         {
@@ -110,6 +122,9 @@ namespace JsonPlaceholderApi.Presentation.Controllers
             }
         }
 
+        /// <summary>
+        /// Remove um Post pelo Id.
+        /// </summary>
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
