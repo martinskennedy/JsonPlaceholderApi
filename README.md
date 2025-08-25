@@ -38,6 +38,7 @@ git clone https://github.com/martinskennedy/JsonPlaceholderApi.git
 - Ferramentas -> Gerenciador de Pacotes do NuGet -> Console do Gerenciador de Pacotes
 
 add-migration CriandoBancoDeDados
+
 update-database
 
 ### 5. Executar o Projeto
