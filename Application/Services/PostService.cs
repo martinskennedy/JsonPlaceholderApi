@@ -66,5 +66,37 @@ namespace JsonPlaceholderApi.Application.Services
             var posts = await _postRepository.GetPostsByUserIdAsync(userId);
             return _mapper.Map<List<PostDto>>(posts);
         }
+
+        public async Task<PostDto?> UpdateAsync(int id, PostDto postDto)
+        {
+            var existingPost = await _postRepository.GetByIdAsync(id);
+
+            if (existingPost == null)
+            {
+                return null;
+            }
+
+            existingPost.UserId = postDto.UserId;
+            existingPost.Title = postDto.Title;
+            existingPost.Body = postDto.Body;
+
+            await _postRepository.UpdateAsync(existingPost);
+
+            return _mapper.Map<PostDto>(existingPost);
+        }
+
+        public async Task<bool> DeleteAsync(int id)
+        {
+            var existing = await _postRepository.GetByIdAsync(id);
+
+            if (existing == null)
+            {
+                return false;
+            }
+
+            await _postRepository.DeleteAsync(id);
+
+            return true;
+        }
     }
 }

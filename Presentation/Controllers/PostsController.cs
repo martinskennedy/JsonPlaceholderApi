@@ -80,5 +80,54 @@ namespace JsonPlaceholderApi.Presentation.Controllers
                 return StatusCode(500, new { message = $"Erro interno: {ex.Message}" });
             }
         }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, [FromBody] PostDto postDto)
+        {
+            try
+            {
+                if (postDto == null)
+                {
+                    return BadRequest("Dados Inválidos");
+                }
+
+                var updated = await _postService.UpdateAsync(id, postDto);
+
+                if (updated == null)
+                {
+                    return NotFound($"Post com Id: {id} não encontrado");
+                }
+                return Ok(updated);
+
+            }
+            catch (ArgumentException ex) // Erros de regra de negócio (parâmetros inválidos, etc.)
+            {
+                return BadRequest(new { message = $"Erro de validação: {ex.Message}" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = $"Erro interno: {ex.Message}" });
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
+                var deleted = await _postService.DeleteAsync(id);
+
+                if (!deleted)
+                {
+                    return NotFound($"Post com Id: {id} não encontrado");
+                }
+
+                return Ok("Registro deletado com sucesso");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = $"Erro inesperado: {ex.Message}" });
+            }
+        }
     }
 }

@@ -7,6 +7,7 @@ namespace JsonPlaceholderApi.Application.Interfaces
         Task<IEnumerable<PostDto>> FetchAndSavePostsAsync();
         Task<IEnumerable<PostDto>> GetAllPostsAsync();
         Task<IEnumerable<PostDto>> GetPostsByUserIdAsync(int userId);
-
+        Task<PostDto?> UpdateAsync(int id, PostDto postDto);
+        Task<bool> DeleteAsync(int id);
     }
 }
