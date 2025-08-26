@@ -13,6 +13,9 @@ namespace JsonPlaceholderApi.Application.Mappings
                 .ForMember(dest => dest.ExternalId, opt => opt.MapFrom(src => src.Id)) // Mapeia o id da API
                 .ReverseMap() // Permite mapear de Post → PostDto
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.ExternalId)); // No reverse, ExternalId vira Id do DTO
+
+            CreateMap<PostDtoTable, Post>()
+                .ReverseMap();
         }
     }
 }

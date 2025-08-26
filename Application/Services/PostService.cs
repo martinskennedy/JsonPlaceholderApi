@@ -55,19 +55,19 @@ namespace JsonPlaceholderApi.Application.Services
             return insertedDtos;
         }
 
-        public async Task<IEnumerable<PostDto>> GetAllPostsAsync()
+        public async Task<IEnumerable<PostDtoTable>> GetAllPostsAsync()
         {
             var posts = await _postRepository.GetAllAsync();
-            return _mapper.Map<List<PostDto>>(posts);
+            return _mapper.Map<List<PostDtoTable>>(posts);
         }
 
-        public async Task<IEnumerable<PostDto>> GetPostsByUserIdAsync(int userId)
+        public async Task<IEnumerable<PostDtoTable>> GetPostsByUserIdAsync(int userId)
         {
             var posts = await _postRepository.GetPostsByUserIdAsync(userId);
-            return _mapper.Map<List<PostDto>>(posts);
+            return _mapper.Map<List<PostDtoTable>>(posts);
         }
 
-        public async Task<PostDto?> UpdateAsync(int id, PostDto postDto)
+        public async Task<PostDtoTable?> UpdateAsync(int id, PostDtoTable postDtoTable)
         {
             var existingPost = await _postRepository.GetByIdAsync(id);
 
@@ -76,13 +76,14 @@ namespace JsonPlaceholderApi.Application.Services
                 return null;
             }
 
-            existingPost.UserId = postDto.UserId;
-            existingPost.Title = postDto.Title;
-            existingPost.Body = postDto.Body;
+            existingPost.ExternalId = postDtoTable.ExternalId;
+            existingPost.UserId = postDtoTable.UserId;
+            existingPost.Title = postDtoTable.Title;
+            existingPost.Body = postDtoTable.Body;
 
             await _postRepository.UpdateAsync(existingPost);
 
-            return _mapper.Map<PostDto>(existingPost);
+            return _mapper.Map<PostDtoTable>(existingPost);
         }
 
         public async Task<bool> DeleteAsync(int id)

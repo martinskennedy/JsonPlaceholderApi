@@ -94,16 +94,16 @@ namespace JsonPlaceholderApi.Presentation.Controllers
         /// Atualiza um Post existente pelo Id.
         /// </summary>
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] PostDto postDto)
+        public async Task<IActionResult> Update(int id, [FromBody] PostDtoTable postDtoTable)
         {
             try
             {
-                if (postDto == null)
+                if (postDtoTable == null)
                 {
                     return BadRequest("Dados Inválidos");
                 }
 
-                var updated = await _postService.UpdateAsync(id, postDto);
+                var updated = await _postService.UpdateAsync(id, postDtoTable);
 
                 if (updated == null)
                 {
