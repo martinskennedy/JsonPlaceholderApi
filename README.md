@@ -15,6 +15,18 @@ Além disso, o projeto conta com:
 - **Testes unitários** com **xUnit + Moq**.  
 
 ---
+📂 Estrutura da Solução
+A solução principal (JsonPlaceholderApi.sln) está dentro da pasta JsonPlaceholderApi, que contém o projeto da API.
+
+O projeto de testes JsonPlaceholderApi.Tests está fora da pasta da API, em um repositório separado:
+
+C:\Projetos\
+│
+├── JsonPlaceholderApi.Tests/     # Projeto de testes (xUnit + Moq)
+└── JsonPlaceholderApi/           # Projeto da API + JsonPlaceholderApi.sln
+
+Observação:
+Para executar a solução completa com testes, você deve clonar os dois repositórios e manter a estrutura acima.
 
 ## ⚙️ Instruções de Configuração
 
@@ -25,7 +37,18 @@ Além disso, o projeto conta com:
 - Git  
 
 ### 2. Clonar o Repositório
-git clone https://github.com/martinskennedy/JsonPlaceholderApi.git
+Clone primeiro o repositório da API:
+JsonPlaceholderApi
+
+Depois clone o repositório de testes uma pasta acima:
+JsonPlaceholderApi.Tests
+
+A estrutura final deve ficar assim:
+
+C:\Projetos\
+├── JsonPlaceholderApi.Tests/
+└── JsonPlaceholderApi/
+    └── JsonPlaceholderApi.sln
 
 ### 3. Configurar o Banco de Dados
 - No arquivo appsettings.json, configure a connection string para o seu SQL Server:
